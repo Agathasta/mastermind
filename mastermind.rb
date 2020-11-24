@@ -1,43 +1,66 @@
-# Set up the board BOARD
-# Set up the analizer (maybe ? for white, ! for red and - for empty) BOARD
-# Let computer make random number combination (1..6) GAME
-# Loop
-#   Get number combination from player (1..6) GUESS
-#   Check if any positions are right  BOARD
-#   Check if any positions are right  BOARD
-#   Set counter +1
-#   Show answer GAME
-#   Break if game is over GAME
-# Show solution GAME
-
 class Mastermind
   def initialize
     @board = Board.new
-    @board.display
   end
-  # def play
-  #   @guess = Guess.new
-  #   @board.board = @guess.ask_guess
-  #   @board.display
-  # end
+
+# Let Human decide who is who PLAYER [game -> player 2x with definitions & board]
+    # puts "Who is codebreaker? (Human, Computer)"
+    # @codebreaker = Player.new (gets.chomp, @board???)
+# def play
+    # get_combi_to_guess
+    # get_guess
+# get_combi_to_guess
+  # if Human = @codebreaker
+    # @combi_to_guess = let computer make random combi_to_guess (1..6) GAME
+  # if Computer = @codebreaker
+    # @combi_to_guess = get combi_to_guess from codemaker (1..6) GAME
+# def get_guess
+    # loop
+      # @guess = @player.ask_guess
+      # @analisis = check_guess
+      # break if game_over? || winner?
+      # @board.update_board(@guess, @analisis)
+# check_guess
+  # check if any positions are right(@guess)  GAME
+  # check if any numbers are right(@guess)  GAME
+# game_over?  GAME
+    # msg with right answer
+# winner? GAME
+    # msg
 end
 
-class Guess
-  # def ask_guess
-  #   puts 'guess?'
-  #   [gets.chomp]
-  # end
+class Codebreaker
+
+## initialize(gets.chomp, board)
+    # @codebreaker = gets.chomp
+    # @board = board???
+# ask_guess from @codebreaker PLAYER
+    # if Human = @codebreaker
+      # gets.chomp
+    # if Computer = @codebreaker
+      # calculate_guess
+# calculate guess
 end
 
 class Board
   def initialize
-    @board = %w[. . . .]
-    @analisis = "- - - -"
-    @round = 1
+    @board = ""
+    @analisis = ""
+    @round = 0
+  end
+
+  def update_board(guess, analisis)
+    @board << guess
+    @analisis += analisis
+    @round += 1
+    display
   end
 
   def display
-    @round.times { puts "#{@board[0]}  #{@board[1]}  #{@board[2]}  #{@board[3]}\t#{@analisis}" }
+    @round.times { |i| 
+      puts "#{@board[-4 + i * 4]}  #{@board[-3 + i * 4]}  #{@board[-2 + i * 4]}  #{@board[-1 + i * 4]}\t
+      #{@analisis}" 
+    }
   end
 end
 
