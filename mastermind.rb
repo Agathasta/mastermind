@@ -10,6 +10,8 @@
 # Show solution GAME
 
 class Mastermind
+  def initialize
+  end
 end
 
 class Player
