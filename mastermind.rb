@@ -21,15 +21,15 @@ class Mastermind
 
   def guess_codebreaker
     loop do
-      @guess_codebreaker = @player.ask_guess_codebreaker
+      @guess_codebreaker = @player.ask_guess_codebreaker(@guess_codebreaker, @analisis)
       exit if @guess_codebreaker.downcase == 'q'
-      @analisis = check_guess
+      @analisis = analize_guess
       @board.update_board(@guess_codebreaker, @analisis)
       break if game_over? || winner?
     end
   end
 
-  def check_guess
+  def analize_guess
     @right_number = @combi_codemaker.scan(/[#{Regexp.quote(@guess_codebreaker)}]/).size
     @right_position = @combi_codemaker.chars.select.with_index { |c, i| c == @guess_codebreaker[i] }.size
     '!' * @right_position + '?' * (@right_number - @right_position) + '-' * (4 - @right_number)
@@ -58,20 +58,33 @@ class Player
   def ask_combi_codemaker
     if @codebreaker == 'h'
       4.times.map { rand(1..6) }.join
-      # elsif Computer = @codebreaker
-      # @combi_to_guess = get combi_to_guess from codemaker (1..6) GAME
+    elsif @codebreaker == 'c'
+      puts 'Enter a combination of four digits between 1 - 6. V.gr.: 2562'
+      gets.chomp
+    else
+      exit
     end
   end
 
-  def ask_guess_codebreaker
+  def ask_guess_codebreaker(guess, analisis)
     if @codebreaker == 'h'
       puts 'Gimme a guess!'
       gets.chomp
-      # if Computer = @codebreaker
-      # calculate_guess
+    elsif @codebreaker == 'c'
+      calculate_guess(guess, analisis)
     end
   end
-  # calculate guess
+
+  def calculate_guess(guess, analisis)
+    if analisis.nil?
+      @all_guesses = (1111..6666).map { |g| g.to_s }
+      '1122'
+    else
+      @all_guesses.delete(guess)
+      @all_guesses.select! { |g| 4 - (g.chars - guess.chars).size == analisis.count('?') + analisis.count('!') }
+      @all_guesses[0]
+    end
+  end
 end
 
 class Board
