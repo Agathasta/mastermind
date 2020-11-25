@@ -20,11 +20,13 @@ class Mastermind
   end
 
   def guess_codebreaker
+    puts 'The combination consists of four digits between 1 - 6. V.gr.: 2562'
     loop do
       @guess_codebreaker = @player.ask_guess_codebreaker(@guess_codebreaker, @analisis)
       exit if @guess_codebreaker.downcase == 'q'
       @analisis = analize_guess
       @board.update_board(@guess_codebreaker, @analisis)
+      sleep(1)
       break if game_over? || winner?
     end
   end
@@ -77,11 +79,14 @@ class Player
 
   def calculate_guess(guess, analisis)
     if analisis.nil?
-      @all_guesses = (1111..6666).map { |g| g.to_s }
+      @all_guesses = (1111..6666).map { |g| g.to_s }.reject { |g| g.include? ('0') }
       '1122'
     else
       @all_guesses.delete(guess)
       @all_guesses.select! { |g| 4 - (g.chars - guess.chars).size == analisis.count('?') + analisis.count('!') }
+      @all_guesses.select! do |g| 
+        g.chars.select.with_index { |c, idx| c == guess.chars[idx] }.size == analisis.count('!')
+      end
       @all_guesses[0]
     end
   end
@@ -104,6 +109,7 @@ class Board
   end
 
   def display
+    puts "Round #{round}:"
     @round.times do |i|
       print "#{@board[0 + i * 4]}  #{@board[1 + i * 4]}  #{@board[2 + i * 4]}  #{@board[3 + i * 4]}\t"
       puts "#{@analisis[0 + i * 4]}  #{@analisis[1 + i * 4]}  #{@analisis[2 + i * 4]}  #{@analisis[3 + i * 4]}"
@@ -112,5 +118,4 @@ class Board
   end
 end
 
-game = Mastermind.new
-game.play
+game = Mastermind.new.play
