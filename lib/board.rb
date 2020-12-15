@@ -17,9 +17,9 @@ class Board
   end
 
   def display
-    puts "Round #{round}:"
+    puts "Round #{round}:".gray
     @round.times do |i|
-      print "#{@board[0 + i * 4]}  #{@board[1 + i * 4]}  #{@board[2 + i * 4]}  #{@board[3 + i * 4]}\t"
+      print "#{@board[0 + i * 4]}  #{@board[1 + i * 4]}  #{@board[2 + i * 4]}  #{@board[3 + i * 4]}\t\t"
       puts "#{@analisis[0 + i * 4]}  #{@analisis[1 + i * 4]}  #{@analisis[2 + i * 4]}  #{@analisis[3 + i * 4]}"
     end
     puts

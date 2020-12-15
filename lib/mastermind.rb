@@ -2,6 +2,7 @@
 
 require_relative 'board'
 require_relative 'player'
+require_relative 'color'
 
 class Mastermind
   def initialize
@@ -10,7 +11,12 @@ class Mastermind
   end
 
   def who_is_codebreaker
-    puts 'Who is the codebreaker? (Human = h, Computer = c)'
+    puts `clear`
+    puts '  *** Mastermind Game ***  '.bg_black.bold
+    puts
+    puts 'Who is the codebreaker?' 
+    puts "[H]".gray + ' Human'
+    puts "[C]".gray + ' Computer'
     gets.chomp.downcase
   end
 
@@ -21,7 +27,13 @@ class Mastermind
   end
 
   def guess_codebreaker
-    puts 'The combination consists of four digits between 1 - 6. V.gr.: 2562'
+    puts `clear`
+    puts '  *** Mastermind Game ***  '.bg_black.bold
+    puts
+    puts 'The combination consists of four digits between 1 - 6.'
+    puts '(for example: 2562)'.gray
+    puts 'To quit enter ' + '[Q]'.gray
+    puts
     loop do
       @guess = @player.ask_guess_codebreaker(@guess, @analisis)
       exit if @guess.downcase == 'q'
@@ -41,14 +53,14 @@ class Mastermind
   def game_over?
     return unless @board.round == 12
 
-    puts "GAME OVER. The right combination was #{@secret_combination}"
+    puts "GAME OVER. The right combination was #{@secret_combination}".red
     exit
   end
 
   def winner?
     return unless @guess == @secret_combination
 
-    puts "CONGRATULATIONS!!! You found out the right combination in #{@board.round} rounds."
+    puts "CONGRATULATIONS!!! You found out the right combination in #{@board.round} rounds.".green
     exit
   end
 end

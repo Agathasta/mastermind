@@ -1,2 +1,2 @@
 language = "ruby"
-run = "ruby mastermind.rb"
+run = "ruby lib/mastermind.rb"
