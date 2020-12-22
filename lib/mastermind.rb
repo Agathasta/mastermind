@@ -12,11 +12,11 @@ class Mastermind
 
   def who_is_codebreaker
     puts `clear`
-    puts '  *** Mastermind Game ***  '.bg_bright_black
+    puts '  *** Mastermind Game ***  '.bright_magenta
     puts
     puts 'Who is the codebreaker?' 
-    puts "[H]".bright_black + ' Human'
-    puts "[C]".bright_black + ' Computer'
+    puts "[H]".magenta.bold + ' Human'
+    puts "[C]".magenta.bold + ' Computer'
     gets.chomp.downcase
   end
 
@@ -28,11 +28,11 @@ class Mastermind
 
   def guess_codebreaker
     puts `clear`
-    puts '  *** Mastermind Game ***  '.bg_bright_black
+    puts '  *** Mastermind Game ***  '.bright_magenta
     puts
     puts 'The combination consists of four digits between 1 - 6.'
-    puts '(for example: 2562)'.bright_black
-    puts 'To quit enter ' + '[Q]'.bright_black
+    puts '(for example: 2562)'.white
+    puts 'To quit enter ' + '[Q]'.magenta.bold
     puts
     loop do
       @guess = @player.ask_guess_codebreaker(@guess, @analisis)
@@ -60,7 +60,7 @@ class Mastermind
   def winner?
     return unless @guess == @secret_combination
 
-    puts "CONGRATULATIONS!!! You found out the right combination in #{@board.round} rounds.".green.dim
+    puts "CONGRATULATIONS!!! You found out the right combination in #{@board.round} rounds.".bright_green
     exit
   end
 end
